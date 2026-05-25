@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: diary-of-sara-and-unai
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        value: love_diary
+      - key: MONGODB_COLLECTION
+        value: diaries

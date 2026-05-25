@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diario de amor</title>
+    <meta name="description" content="Un diario compartido para escribir una historia de amor entre dos personas." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop backdrop-a"></div>
+    <div class="backdrop backdrop-b"></div>
+
+    <main class="shell">
+      <section class="hero card">
+        <div class="eyebrow">Diario compartido</div>
+        <h1 id="titleDisplay">Nuestro diario</h1>
+        <p id="subtitleDisplay" class="subtitle">Una historia de amor escrita entre dos voces</p>
+        <div class="hero-actions">
+          <button class="button button-primary" id="newEntryBtn">Nueva entrada</button>
+          <button class="button button-secondary" id="saveDiaryBtn">Guardar portada</button>
+        </div>
+      </section>
+
+      <section class="layout">
+        <article class="card editor-card">
+          <div class="card-header">
+            <div>
+              <h2>Escribir</h2>
+              <p>Ambos pueden editar desde la misma página.</p>
+            </div>
+            <span id="statusBadge" class="badge">Cargando...</span>
+          </div>
+
+          <form id="entryForm" class="entry-form">
+            <input id="entryId" type="hidden" />
+            <div class="grid two-col">
+              <label>
+                Fecha
+                <input id="dateInput" type="date" required />
+              </label>
+              <label>
+                Quién escribe
+                <input id="authorInput" type="text" maxlength="40" placeholder="Sara o Unai" required />
+              </label>
+            </div>
+            <div class="grid one-col">
+              <label>
+                Título del momento
+                <input id="emotionInput" type="text" maxlength="80" placeholder="Un paseo al atardecer" required />
+              </label>
+              <label>
+                Entrada
+                <textarea id="textInput" rows="9" maxlength="5000" placeholder="Escribe aquí vuestro recuerdo, carta o capítulo..." required></textarea>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">Guardar entrada</button>
+              <button class="button button-secondary" type="button" id="cancelEditBtn">Cancelar edición</button>
+            </div>
+          </form>
+        </article>
+
+        <aside class="card cover-card">
+          <div class="card-header">
+            <div>
+              <h2>Portada</h2>
+              <p>Texto compartido para todo el diario.</p>
+            </div>
+          </div>
+          <form id="coverForm" class="cover-form">
+            <label>
+              Título
+              <input id="coverTitleInput" type="text" maxlength="80" />
+            </label>
+            <label>
+              Subtítulo
+              <textarea id="coverSubtitleInput" rows="5" maxlength="180"></textarea>
+            </label>
+          </form>
+          <div class="notes">
+            <p>Consejo: en Render define <strong>MONGODB_URI</strong> para usar Atlas; en local, si no lo defines, se guarda en un archivo dentro del proyecto.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="card timeline-card">
+        <div class="card-header">
+          <div>
+            <h2>Capítulos</h2>
+            <p>Ordenados del más reciente al más antiguo.</p>
+          </div>
+          <span id="entryCount" class="badge">0 entradas</span>
+        </div>
+        <div id="entriesList" class="entries-list"></div>
+      </section>
+    </main>
+
+    <template id="entryTemplate">
+      <article class="entry-item">
+        <div class="entry-meta">
+          <span class="entry-date"></span>
+          <span class="entry-author"></span>
+        </div>
+        <h3 class="entry-emotion"></h3>
+        <p class="entry-text"></p>
+        <div class="entry-actions">
+          <button class="button button-secondary entry-edit" type="button">Editar</button>
+          <button class="button button-danger entry-delete" type="button">Borrar</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
