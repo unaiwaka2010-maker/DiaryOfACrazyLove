@@ -201,11 +201,18 @@ async function deleteEntry(id) {
   setStatus('Entrada borrada', 'success');
 }
 
+// Debounce para input del cover
+let coverDebounceTimer;
+function debounceCoverUpdate() {
+  clearTimeout(coverDebounceTimer);
+  coverDebounceTimer = setTimeout(() => {
+    diaryTitle.textContent = coverTitleInput.value || 'Nuestro diario';
+    diarySubtitle.textContent = coverSubtitleInput.value || '';
+  }, 200);
+}
+
 entryForm.addEventListener('submit', saveEntry);
-coverForm.addEventListener('input', () => {
-  diaryTitle.textContent = coverTitleInput.value || 'Nuestro diario';
-  diarySubtitle.textContent = coverSubtitleInput.value || '';
-});
+coverForm.addEventListener('input', debounceCoverUpdate);
 saveDiaryBtn.addEventListener('click', saveCover);
 newEntryBtn.addEventListener('click', resetEntryForm);
 cancelEditBtn.addEventListener('click', resetEntryForm);

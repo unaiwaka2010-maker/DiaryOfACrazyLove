@@ -17,7 +17,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 body {
@@ -77,8 +77,8 @@ button {
 .card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
   border-radius: 28px;
 }
 
