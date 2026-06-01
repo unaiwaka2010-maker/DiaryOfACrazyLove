@@ -21,6 +21,24 @@ const state = {
   diary: null
 };
 
+// Solicitar permiso para notificaciones
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+// Mostrar notificación
+function showNotification(title, options = {}) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(title, {
+      icon: '/favicon.ico',
+      badge: '/favicon.ico',
+      ...options
+    });
+  }
+}
+
 function setStatus(message, tone = 'neutral') {
   statusBadge.textContent = message;
   statusBadge.dataset.tone = tone;
@@ -161,6 +179,14 @@ async function saveEntry(event) {
   renderDiary(diary);
   resetEntryForm();
   setStatus('Entrada guardada', 'success');
+  
+  // Mostrar notificación
+  const author = authorInput.value || 'Sara y Unai';
+  showNotification('💕 Nueva entrada guardada', {
+    body: `${author} ha escrito en el diario: "${emotionInput.value}"`,
+    tag: 'diary-entry',
+    requireInteraction: false
+  });
 }
 
 async function deleteEntry(id) {
@@ -188,5 +214,8 @@ loadDiary().catch(error => {
   console.error(error);
   setStatus('Error al cargar', 'error');
 });
+
+// Solicitar permiso para notificaciones al cargar
+requestNotificationPermission();
 
 dateInput.value = new Date().toISOString().slice(0, 10);
